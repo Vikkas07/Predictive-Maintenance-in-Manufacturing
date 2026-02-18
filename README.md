@@ -100,5 +100,5 @@ Future work may include integrating live sensor feeds, predicting remaining usef
 
 Author
 
-Aanya Singh
+Aanya Singh,vikas kumar singh ,Nikita Shelke 
 Bachelor of Computer Applications
