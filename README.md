@@ -1,104 +1,133 @@
-Predictive Maintenance in Manufacturing using Machine Learning
-This project implements a predictive maintenance system that estimates the probability of machine failure from industrial sensor measurements and generates a maintenance recommendation before breakdown occurs.
+# Predictive Maintenance in Manufacturing using Machine Learning
 
-Instead of repairing machines after failure or servicing them at fixed intervals, the system monitors machine condition and schedules maintenance only when operational risk becomes significant. The goal is to reduce downtime, avoid unnecessary servicing, and support data-driven maintenance planning.
+This project implements a predictive maintenance system that estimates the probability of machine failure from industrial sensor measurements and generates a maintenance recommendation before a breakdown occurs.
 
-The project simulates an Industry 4.0 scenario where IoT sensors continuously record machine behavior and a trained model evaluates the health state of the equipment.
+Instead of repairing machines after failure or servicing them at fixed intervals, the system monitors machine condition and schedules maintenance only when operational risk becomes significant. The objective is to reduce unexpected downtime, avoid unnecessary servicing, and support data-driven maintenance planning.
 
-Project Motivation
+The project simulates an Industry 4.0 environment where industrial equipment is monitored through sensor measurements and a machine learning model continuously evaluates the health state of the machine.
 
-Traditional maintenance strategies operate blindly:
+---
 
-Reactive maintenance repairs machines after failure, causing production downtime and high cost.
+# Project Motivation
 
-Preventive maintenance services machines on a fixed schedule, often replacing healthy components.
+Traditional maintenance strategies operate with limited information.
 
-Predictive maintenance observes actual machine behavior and decides maintenance timing based on condition.
-This project demonstrates how machine learning can learn complex stress patterns from sensor data and convert them into actionable maintenance decisions.
+Reactive maintenance repairs machines only after they fail, which can halt production and cause expensive emergency repairs. Preventive maintenance improves reliability by servicing machines on a fixed schedule, but it often replaces components that are still functioning normally.
 
-Dataset
+Predictive maintenance takes a different approach. Instead of relying on time-based schedules, it analyzes the actual operating condition of machines and predicts when failure is likely to occur. Maintenance can then be scheduled only when risk becomes significant.
 
-The system uses the AI4I 2020 Predictive Maintenance dataset, a simulated industrial dataset designed to represent real equipment behavior.
+This project demonstrates how machine learning can learn patterns of mechanical stress from sensor data and convert those patterns into actionable maintenance decisions.
 
-Each record describes a machine’s operating state using measurements such as temperature, rotational speed, torque, and tool wear, along with a label indicating whether a failure occurred.
+---
 
-The dataset is imbalanced, meaning failures are rare events. This reflects real industrial conditions and requires careful model evaluation beyond simple accuracy.
+# Dataset
 
-Methodology
+The system uses the **AI4I 2020 Predictive Maintenance dataset**, a simulated industrial dataset designed to represent realistic machine behavior.
 
-The project follows a complete machine learning pipeline.
+Each record represents the operating state of a machine and includes sensor measurements such as air temperature, process temperature, rotational speed, torque, and accumulated tool wear. The dataset also includes labels indicating whether a machine failure occurred.
 
-First, exploratory analysis was performed to understand how mechanical load and temperature relate to failure.
-Then feature engineering introduced an overheating indicator derived from the difference between process temperature and air temperature.
+Failures are rare events in the dataset, reflecting real industrial environments where machines operate normally most of the time but occasionally fail under high mechanical or thermal stress. Because of this imbalance, evaluating the model requires more than simple accuracy metrics.
 
-Multiple models were trained and compared:
+---
 
-A linear baseline model to observe general trends
-A tree ensemble model to capture nonlinear patterns
-A gradient boosting model for final optimization
+# Machine Learning Approach
 
-The final system uses an XGBoost classifier because it achieved the best balance between detecting failures and avoiding excessive false alarms.
+The project follows a full machine learning workflow beginning with exploratory analysis and ending with a deployable prediction system.
 
-The model outputs failure probability rather than a simple yes/no prediction.
-A decision threshold converts probability into an operational instruction.
+Initial data exploration was used to understand how temperature, mechanical load, and wear interact during failure events. Feature engineering then introduced an additional variable representing the difference between process temperature and air temperature. This feature acts as an indicator of overheating conditions that can accelerate machine degradation.
 
-When predicted risk exceeds 30%, maintenance is recommended.
+Multiple models were trained and compared during experimentation, including a linear baseline model, a tree-based ensemble model, and a gradient boosting model. The final system uses **XGBoost**, which provided the best balance between detecting true failures and minimizing unnecessary maintenance alerts.
 
-System Behavior
+Rather than returning a simple binary prediction, the model outputs a **failure probability**. This probability is converted into an operational decision using a threshold policy. When predicted failure risk exceeds 30%, the system recommends maintenance.
 
-The model discovered that machine failure is driven primarily by combined mechanical stress rather than a single threshold variable.
+---
 
-High rotational speed combined with torque and accumulated tool wear significantly increases failure probability.
-Temperature alone is less informative than the interaction between thermal and mechanical stress.
+# System Architecture
 
-This demonstrates why predictive analytics outperforms rule-based monitoring systems.
+The project evolved from a machine-learning experiment into a small, deployable analytics system.
 
-Example output from the prediction module:
+The trained model processes sensor measurements to estimate the probability of failure. The prediction engine loads the saved model and generates maintenance recommendations based on the risk threshold.
 
-Failure probability: 0.799
-Decision: Maintenance Required
+A **Streamlit dashboard** provides an interactive interface for exploring the system. Users can enter machine operating conditions and instantly see the predicted failure probability along with maintenance guidance.
 
-Repository Structure
+The system architecture can be viewed as a simple pipeline:
 
-The repository is organized to separate experimentation, trained artifacts, and executable system components.
+Machine sensor data → trained ML model → failure probability → maintenance decision → dashboard interface
 
-The notebooks directory contains the full analysis pipeline including data understanding, feature engineering, model training, and visualization.
-The src directory contains the prediction module that loads the trained model and generates maintenance recommendations.
-The models directory stores the trained model object used during inference.
-The reports directory contains generated visualizations and results used for evaluation.
+---
 
-Running the Project
+# Streamlit Dashboard
 
-Clone the repository and navigate into the project directory.
+To make the model easier to interact with, a web dashboard was built using Streamlit.
 
-Install dependencies:
+The dashboard presents the predictive maintenance system in four sections. The overview page introduces the concept of predictive maintenance and explains how the system works. The live prediction page allows users to input sensor values and obtain real-time failure predictions from the trained model. The risk analysis page visualizes the factors contributing to machine stress and highlights conditions that increase failure probability. The maintenance planner provides simple recommendations based on predicted risk levels.
+
+This interface transforms the machine learning model from an offline experiment into a decision-support tool that can be explored interactively.
+
+---
+
+# Continuous Integration with Jenkins
+
+The project also includes a Jenkins pipeline that demonstrates how the system could be integrated into a continuous integration workflow.
+
+The pipeline automatically retrieves the latest code from the repository, installs project dependencies, and prepares the environment required to run the system. While the pipeline is simple, it reflects how machine learning systems are often integrated into DevOps pipelines to automate testing, updates, and deployment steps.
+
+The pipeline configuration is defined in the **Jenkinsfile** located in the repository.
+
+---
+
+# Repository Structure
+
+The repository is organized to separate experimentation, trained artifacts, and application components.
+
+The `notebooks` directory contains the full data science workflow, including data understanding, feature engineering, model training, and visualization. The `models` directory stores the trained model used for prediction. The `src` directory contains utility modules that load the model and perform inference.
+
+The Streamlit dashboard is implemented through the main `app.py` file and the pages stored in the `pages` directory. Configuration settings for the dashboard are located in the `.streamlit` folder.
+
+Supporting datasets are stored in the `data` directory, while generated visualizations and analysis outputs are stored in `reports`.
+
+---
+
+# Running the Project
+
+Clone the repository and navigate to the project directory.
+
+Install the required Python dependencies:
 
 pip install -r requirements.txt
 
-Run the prediction system:
+Once the environment is ready, launch the dashboard:
 
-python src/predict.py
+streamlit run app.py
 
-The script will load the trained model and print the predicted failure probability along with a maintenance recommendation.
+The application will open in a browser window where you can explore machine failure predictions interactively.
 
-Results
+---
 
-The final model demonstrates strong ability to distinguish failing machines from healthy machines.
-It detects most upcoming failures while keeping unnecessary maintenance alerts low.
+# Results
 
-The threshold-based decision system converts machine learning output into an operational policy rather than a theoretical metric.
+The trained model demonstrates a strong ability to distinguish between healthy machines and machines approaching failure conditions. Instead of relying on simple threshold rules, the model captures nonlinear relationships between torque, rotational speed, temperature, and tool wear.
 
-Applications
+This allows the system to detect risky operating conditions earlier and generate maintenance recommendations before failure occurs.
 
-This approach can be applied to production lines, CNC machining, industrial motors, turbines, and other equipment monitored through sensor data.
-It is particularly useful in smart factories where continuous monitoring data is available.
+---
 
-Limitations and Future Work
+# Applications
 
-The dataset is simulated and does not include real-time streaming data.
-Future work may include integrating live sensor feeds, predicting remaining useful life, and deploying the system in a dashboard environment.
+Predictive maintenance systems like this can be applied to manufacturing equipment such as CNC machines, industrial motors, turbines, and other machinery monitored through sensor data. In smart factories where machines generate continuous operational data, systems like this can significantly reduce downtime and maintenance costs.
 
-Author
+---
 
-Aanya Singh,vikas kumar singh ,Nikita Shelke 
+# Limitations and Future Work
+
+The dataset used in this project is simulated and does not represent real-time sensor streams. Future improvements could include integrating live IoT data, predicting the remaining useful life of components, and deploying the system on a cloud platform for continuous monitoring.
+
+---
+
+# Authors
+
+Aanya Singh
+Vikas Kumar Singh
+Nikita Shelke
+
 Bachelor of Computer Applications
