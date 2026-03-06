@@ -1,4 +1,4 @@
-# Predictive Maintenance in Manufacturing using Machine Learning
+## Predictive Maintenance in Manufacturing using Machine Learning
 
 This project implements a predictive maintenance system that estimates the probability of machine failure from industrial sensor measurements and generates a maintenance recommendation before a breakdown occurs.
 
@@ -8,7 +8,7 @@ The project simulates an Industry 4.0 environment where industrial equipment is 
 
 ---
 
-# Project Motivation
+## Project Motivation
 
 Traditional maintenance strategies operate with limited information.
 
@@ -20,7 +20,7 @@ This project demonstrates how machine learning can learn patterns of mechanical 
 
 ---
 
-# Dataset
+## Dataset
 
 The system uses the **AI4I 2020 Predictive Maintenance dataset**, a simulated industrial dataset designed to represent realistic machine behavior.
 
@@ -30,7 +30,7 @@ Failures are rare events in the dataset, reflecting real industrial environments
 
 ---
 
-# Machine Learning Approach
+## Machine Learning Approach
 
 The project follows a full machine learning workflow beginning with exploratory analysis and ending with a deployable prediction system.
 
@@ -42,7 +42,7 @@ Rather than returning a simple binary prediction, the model outputs a **failure 
 
 ---
 
-# System Architecture
+## System Architecture
 
 The project evolved from a machine-learning experiment into a small, deployable analytics system.
 
@@ -56,7 +56,7 @@ Machine sensor data → trained ML model → failure probability → maintenance
 
 ---
 
-# Streamlit Dashboard
+## Streamlit Dashboard
 
 To make the model easier to interact with, a web dashboard was built using Streamlit.
 
@@ -66,7 +66,7 @@ This interface transforms the machine learning model from an offline experiment 
 
 ---
 
-# Continuous Integration with Jenkins
+## Continuous Integration with Jenkins
 
 The project also includes a Jenkins pipeline that demonstrates how the system could be integrated into a continuous integration workflow.
 
@@ -76,7 +76,7 @@ The pipeline configuration is defined in the **Jenkinsfile** located in the repo
 
 ---
 
-# Repository Structure
+## Repository Structure
 
 The repository is organized to separate experimentation, trained artifacts, and application components.
 
@@ -88,7 +88,7 @@ Supporting datasets are stored in the `data` directory, while generated visualiz
 
 ---
 
-# Running the Project
+## Running the Project
 
 Clone the repository and navigate to the project directory.
 
@@ -104,7 +104,7 @@ The application will open in a browser window where you can explore machine fail
 
 ---
 
-# Results
+## Results
 
 The trained model demonstrates a strong ability to distinguish between healthy machines and machines approaching failure conditions. Instead of relying on simple threshold rules, the model captures nonlinear relationships between torque, rotational speed, temperature, and tool wear.
 
@@ -112,19 +112,19 @@ This allows the system to detect risky operating conditions earlier and generate
 
 ---
 
-# Applications
+## Applications
 
 Predictive maintenance systems like this can be applied to manufacturing equipment such as CNC machines, industrial motors, turbines, and other machinery monitored through sensor data. In smart factories where machines generate continuous operational data, systems like this can significantly reduce downtime and maintenance costs.
 
 ---
 
-# Limitations and Future Work
+## Limitations and Future Work
 
 The dataset used in this project is simulated and does not represent real-time sensor streams. Future improvements could include integrating live IoT data, predicting the remaining useful life of components, and deploying the system on a cloud platform for continuous monitoring.
 
 ---
 
-# Authors
+## Authors
 
 Aanya Singh
 Vikas Kumar Singh
